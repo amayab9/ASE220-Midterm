@@ -1,5 +1,5 @@
 const quotes={
-	documentID:'1079835974602866688',
+	documentID:'1079866388960788480',
 	index:function(){
 		document.getElementById('quotes').innerHTML='Loading quotes, please wait...';
 		database.index(quotes.documentID,function(items){
@@ -18,11 +18,15 @@ const quotes={
 			}
 		});
 	},
-	detail:function(index){
+	// For fetching the info for petDetail page
+	petdetail:function(index){
+		// TODO: change item.petX to whatever needs to be changed.
 		database.detail(quotes.documentID,index,function(item){
 			document.getElementById('loading').style.display='none';
-			document.getElementById('quote-author').innerText=item.author;
-			document.getElementById('quote-text').innerText=item.quote;
+			document.getElementByID('pet-photo').innerText=`<div id="petPhoto" class="col">${item.petPhoto}</div>`;
+			document.getElementById('pet-ident').innerText=`<div id="petID" class="col">ID #: +${item.petID}+</div><div id="petName" class="col">Name: ${item.petName}</div>`;
+			document.getElementById('pet-kind').innerText=`<div id="petSpecies" class="col">Species: ${item.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
+			document.getElementByID('pet-stats').innerText=`<div id="petSex" class="col">Sex: ${item.petSex}</div><div id="petAge" class="col">Age: "${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
 							
 			let deleteButton=document.getElementById('btn-delete');
