@@ -28,7 +28,9 @@ const quotes={
 			document.getElementById('pet-kind').innerText=`<div id="petSpecies" class="col">Species: ${item.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
 			document.getElementByID('pet-stats').innerText=`<div id="petSex" class="col">Sex: ${item.petSex}</div><div id="petAge" class="col">Age: "${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
-							
+			
+			// TODO: this area for medication pagination
+
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
 				database.delete(quotes.documentID,index);
