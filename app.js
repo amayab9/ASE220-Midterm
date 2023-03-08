@@ -1,30 +1,55 @@
 const quotes={
-	documentID:'1079835974602866688',
+	documentID:'1079866388960788480',
 	index:function(){
-		document.getElementById('quotes').innerHTML='Loading quotes, please wait...';
+		
 		database.index(quotes.documentID,function(items){
 			document.getElementById('quotes').innerHTML='';
+			// Steps through the array of quotes
 			for(let i=0;i<items.length;i++){
-				let quote=items[i];
+				// finds the specific quote at index location
+				let user=items[i];
+				// declares el as a created Div element.
 				let el=document.createElement('div');
+				// writes HTML to the new el element.
 				el.innerHTML=`<div>
 						<blockquote>
-							<em><a href="detail.html?index=${i}">${quote.quote}</a></em>
+							<em><a href="detail.html?index=${i}">${user.firstName} ${user.lastName}</a></em>
 						</blockquote>
 						${quote.author}
 						<hr />
 					</div>`;
+					// adds new HTML to the index.html page.
 				document.getElementById('quotes').append(el);
 			}
 		});
 	},
-	detail:function(index){
+	// For fetching the info for userDetail page
+	userDetail:function(index){
 		database.detail(quotes.documentID,index,function(item){
 			document.getElementById('loading').style.display='none';
-			document.getElementById('quote-author').innerText=item.author;
-			document.getElementById('quote-text').innerText=item.quote;
+			document.getElementByID('user-firstName').innerText=`<div id="userFirstName" class="col">First Name: ${item.users[i].firstName}</div>`; //get user's first name and display
+			document.getElementById('user-lastName').innerText=`<div id="userLastName" class="col">Last Name: +${item.users[i].lastName}+</div><div id="petName" class="col">Name: ${item.petName}</div>`; // get user's last name and display
+			document.getElementById('user-petNames').innerText=`<div id="usersPets" class="col">Pets: ${item.pets.userID[i]}</div>`; //calls inside the object -> pets -> search in pets for the userID in which matches the User clicked
+
+			let deleteButton=document.getElementById('btn-delete');
+			deleteButton.addEventListener('click',function(){
+				database.delete(quotes.documentID,index);
+			});
+		});
+	},
+	// For fetching the info for petDetail page
+	petdetail:function(index){
+		// TODO: change item.petX to whatever needs to be changed.
+		database.detail(quotes.documentID,index,function(item){
+			document.getElementById('loading').style.display='none';
+			document.getElementByID('pet-photo').innerText=`<div id="petPhoto" class="col">${item.pet[i].petPhoto}</div>`;
+			document.getElementById('pet-ident').innerText=`<div id="petID" class="col">ID #: +${item.petID}+</div><div id="petName" class="col">Name: ${item.petName}</div>`;
+			document.getElementById('pet-kind').innerText=`<div id="petSpecies" class="col">Species: ${item.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
+			document.getElementByID('pet-stats').innerText=`<div id="petSex" class="col">Sex: ${item.petSex}</div><div id="petAge" class="col">Age: "${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
-							
+			
+			// TODO: this area for medication pagination
+
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
 				database.delete(quotes.documentID,index);
