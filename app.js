@@ -1,9 +1,9 @@
 const quotes={
-	documentID:'1079835974602866688',
+	documentID:'101079866388960788480',
 	index:function(){
-		
-		database.index(x.documentID,function(items){
-			document.getElementById('items.users').innerHTML='';
+
+		database.index(quotes.documentID,function(items){
+			document.getElementById('quotes').innerHTML='';
 
 			for(let i=0;i<items.users.length;i++){
 
@@ -12,38 +12,45 @@ const quotes={
 				let el=document.createElement('div');
 
 				el.innerHTML=`<div>
-						<blockquote>
+				<blockquote>
 							<em><a href="detail.html?index=${i}">${user.firstName} ${user.lastName}</a></em>
 						</blockquote>
 						<hr />
 					</div>`;
 
-				document.getElementById('items.user').append(el);
+
+				document.getElementById('quotes').append(el);
 			}
+		}
+		)
+	},
 
-			for(let i=0;i<items.pets.length;i++){
-				let pet=items.pets[i];
+	userdetails:function(index){
+		database.index(quotes.documentID,index,function(item){
+			let user = item;
+			document.getElementById('loading').style.display='none';
+			document.getElementById('user-email').innerHTML=`<div id="emailAddress" class="col">${users.emailAddress}</div>`;
+			document.getElementById('user-fn').innerHTML=`<div id="userfn" class="col">${users.firstName}</div>`;
+			document.getElementById('user-ln').innerHTML=`<div id="userln" class="col">${users.lastName}</div>`;
 
-				let elm=document.createElement('div');
-				elm.innerHTML=`<div>
-				<div col>
-				<div class="card mb-3" style="max-width: 540px;">
-				<div class="row g-0">
-	  			<div class="col-md-4">
-	  			</div>
-				  <div class="col-md-8">
-				  <div class="card-body">
-				  	<h5 class="card-title">${item.petName}</h5>
-					  <p class="card-text">${item.breed}<br />
-					  					   ${item.age}<br />
-										   ${item.location}</p>
-					<p class="card-text"><small class="text-muted">${item.updates}</small></p>
-					<button a href="petDetail.html?index=${item.ID}" type="button" class="btn btn-dark">View</a></button>
-				  </div`
+			database.usersArray(quotes.documentID,function(item){
+				for(let i=0;i<item.length;i++){
+					if(item[i].userID==users.userID){
+						console.log(item[i]);
+						document.getElementById('user-page').innerHTML+=`<div class="card" style="max-width:400px";>
+						<div class="card-body">
+                    <h5 class="card-title">${item.firstName} ${item.lastName}</h5>
+                      <p class="card-text">${item.emailAddress}</p>
+                    <button a href="index.html?index=${item.userID}" type="button" class="btn btn-dark">View</a></button>
+                  </div>`;
+					}
+				}
+			}
+			)
+		}
+		)
+	},
 
-	  }
-				document.getElementById('pets').append(elm);
-			},
 
 	detail:function(index){
 		database.detail(quotes.documentID,index,function(item){
