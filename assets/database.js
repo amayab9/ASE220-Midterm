@@ -2,6 +2,10 @@ const database={
 	index:function(documentID,callback){
 		api.GET(documentID,function(response){
 			callback(response.data);
+			// troubleshooting stuff, these fire *after* the database.index function in app.js
+			// console.log("database.index fired.");
+			// this returns the JSONBLOB object. so: Object{ User{}; Pet{}; Medication{}};
+			// console.log(response.data);
 		});
 	},
 	detail:function(documentID,index,callback){
