@@ -68,21 +68,28 @@ const quotes={
 			document.getElementById('pet-stats').innerHTML=`<div id="petSex" class="col">Sex: ${pet.petSex}</div><div id="petAge" class="col">Age: ${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
 			
-			// TODO: this area for medication pagination
 			// This should add all medications taken by the pet as cards. Pagination can be added later.
 			// creates a card and APPENDS it to the innerHTML to create multiple cards.
-			// run a loop through medications, check that USERID and PETID in medication object matches current pet.
+			// run a loop through medications, check that userID and petID in medication object matches current pet.
 			// need to pull medicationLog from jsonBlob.
+
+			// TODO: troubleshoot this
 			database.medicationArray(quotes.documentID,function(item){
-				for(let i=0;i<item.medicationLog.length;i++){
+				for(let i=0;i<item.length;i++){
+					// troubleshooting...
+					// console.log("What is in item?");
+					// item returns medicationLog as array
+					// console.log(item);
 					// if PetID matches, add medication page
-					if(item.medicationLog[i].petID==pet.petID){
+					if(item[i].petID==pet.petID){
+						//troubleshooting
+						console.log(item[i]);
 						// TODO: add a text field where user can write when they gave the medicine.
-						document.getElementByID('medication-pages').innerHTML+=`<div class="card" style="width: 18rem;">
+						document.getElementById('medication-pages').innerHTML+=`<div class="card" style="width: 18rem;">
 							<img class="card-img-top" src="..." alt="Card image cap">
 								<div class="card-body">
-									<h5 class="card-title">${item.medicationName}</h5>
-									<p class="card-text">Dose Amount:${item.dosage}  Timing:${item.numberOfDailyDoses}<br/></p>
+									<h5 class="card-title">${item[i].medicationName}</h5>
+									<p class="card-text">Dose Amount: ${item[i].dosage} <br/> Timing: ${item[i].numberOfDailyDoses}<br/></p>
 									<a href="#" class="btn btn-primary">Medication Details</a>
 								</div>
 							</div>`

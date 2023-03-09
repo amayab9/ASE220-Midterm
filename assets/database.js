@@ -26,7 +26,13 @@ const database={
 	medicationArray:function(documentID,callback){
 		api.GET(documentID,function(response){
 			// this should return the /entire/ medicationLog array. Messy, unwieldy, but good enough for now.
-			// TODO: fix this to be better. pass in petID?? run as an if-else?
+			// TODO: fix this to be better. pass in petID?? 
+			// could run a loop through medicationLog as if pulling new detail page if petID matches here and in 
+			
+			// troubleshooting
+			// console.log("Inside database.medicationArray function.")
+			// console.log(response.data.medicationLog);
+			
 			callback(response.data.medicationLog);
 		});
 	},
