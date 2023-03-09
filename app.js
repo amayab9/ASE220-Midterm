@@ -1,25 +1,25 @@
-const quotes={
+const Items={
 	documentID:'1079835974602866688',
 	index:function(){
-		document.getElementById('quotes').innerHTML='Loading quotes, please wait...';
-		database.index(quotes.documentID,function(items){
-			document.getElementById('quotes').innerHTML='';
+		document.getElementById('Items').innerHTML='Loading Items, please wait...';
+		database.index(Items.documentID,function(items){
+			document.getElementById('Items').innerHTML='';
 			for(let i=0;i<items.length;i++){
 				let quote=items[i];
 				let el=document.createElement('div');
 				el.innerHTML=`<div>
 						<blockquote>
-							<em><a href="detail.html?index=${i}">${quote.quote}</a></em>
+							<em><a href="medDetail.html?index=${i}">${quote.quote}</a></em>
 						</blockquote>
 						${quote.author}
 						<hr />
 					</div>`;
-				document.getElementById('quotes').append(el);
+				document.getElementById('Items').append(el);
 			}
 		});
 	},
 	detail:function(index){
-		database.detail(quotes.documentID,index,function(item){
+		database.detail(Items.documentID,index,function(item){
 			document.getElementById('loading').style.display='none';
 			document.getElementById('quote-author').innerText=item.author;
 			document.getElementById('quote-text').innerText=item.quote;
@@ -27,7 +27,7 @@ const quotes={
 							
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
-				database.delete(quotes.documentID,index);
+				database.delete(Items.documentID,index);
 			});
 		});
 	},
@@ -40,11 +40,11 @@ const quotes={
 				author:author.value,
 				quote:quote.value
 			}
-			database.create(quotes.documentID,newQuote);
+			database.create(Items.documentID,newQuote);
 		});
 	},
 	update:function(index){
-		database.detail(quotes.documentID,index,function(item){
+		database.detail(Items.documentID,index,function(item){
 			document.getElementById('loading').style.display='none';
 			document.querySelector('form input[name=author]').value=item.author;
 			document.querySelector('form textarea[name=quote]').value=item.quote;
@@ -57,7 +57,7 @@ const quotes={
 					author:author.value,
 					quote:quote.value
 				}
-				database.update(quotes.documentID,index,newQuote);
+				database.update(Items.documentID,index,newQuote);
 			});
 		});
 	}
