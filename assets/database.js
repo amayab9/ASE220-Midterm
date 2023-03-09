@@ -8,9 +8,26 @@ const database={
 			// console.log(response.data);
 		});
 	},
+	// keep unchanged as a reference on where to change stuff for specific pages.
 	detail:function(documentID,index,callback){
 		api.GET(documentID,function(response){
 			callback(response.data[index]);
+		});
+	},
+	// specifically for pet detail.
+	petDetail:function(documentID,index,callback){
+		api.GET(documentID,function(response){
+			// this line specifies getting the specific pet.
+			// response.data is the entire JSONBlob so specify we want ot grab from the pets array.
+			callback(response.data.pets[index]);
+		});
+	},
+	// this is actually an alteration of database.index
+	medicationArray:function(documentID,callback){
+		api.GET(documentID,function(response){
+			// this should return the /entire/ medicationLog array. Messy, unwieldy, but good enough for now.
+			// TODO: fix this to be better. pass in petID?? run as an if-else?
+			callback(response.data.medicationLog);
 		});
 	},
 	update:function(documentID,index,newData){

@@ -12,8 +12,9 @@ const quotes={
 				// finds the specific quote at index location
 				// we want the User Array and a Specific User at index. 
 				let user=items.users[i];
-				console.log("Do we have a specific user?");
-				console.log(user);
+				// troubleshooting
+				// console.log("Do we have a specific user?");
+				// console.log(user);
 				// declares el as a created Div element.
 				let el=document.createElement('div');
 				// writes HTML to the new el element.
@@ -26,32 +27,76 @@ const quotes={
 					// adds new HTML to the index.html page.
 				document.getElementById('quotes').append(el);
 			}
+			// quick and dirty way to see all pets so I can test my pets detail pages.
+			for(let i=0;i<items.pets.length;i++){
+				let pet=items.pets[i];
+				// troubleshooting
+				// console.log("Do we have a specific pet?");
+				// console.log(pet);
+				let elm=document.createElement('div');
+				elm.innerHTML=`<div>
+				<blockquote>
+					<em><a href="petDetail.html?index=${i}">${pet.petName} ${pet.petType}</a></em>
+				</blockquote>
+				<hr />
+				</div>`;
+				document.getElementById('pets').append(elm);
+			}
+		});
+	},
+	detail:function(index){
+		database.detail(quotes.documentID,index,function(item){
+			document.getElementById('loading').style.display='none';
+			document.getElementById('quote-author').innerText=item.author;
+			document.getElementById('quote-text').innerText=item.quote;
+			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
+			let deleteButton=document.getElementById('btn-delete');
+			deleteButton.addEventListener('click',function(){
+				database.delete(quotes.documentID,index);
+			});
 		});
 	},
 	// For fetching the info for petDetail page
 	petdetail:function(index){
 		// The info from the JSONBlob at the index is passed in as item, should be 1 pet from the array.
-		database.detail(quotes.documentID,index,function(item){
+		database.petDetail(quotes.documentID,index,function(item){
+			let pet = item;
 			document.getElementById('loading').style.display='none';
-			document.getElementByID('pet-photo').innerText=`<div id="petPhoto" class="col">${item.petPhoto}</div>`;
-			document.getElementById('pet-ident').innerText=`<div id="petID" class="col">ID #: +${item.petID}+</div><div id="petName" class="col">Name: ${item.petName}</div>`;
-			document.getElementById('pet-kind').innerText=`<div id="petSpecies" class="col">Species: ${item.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
-			document.getElementByID('pet-stats').innerText=`<div id="petSex" class="col">Sex: ${item.petSex}</div><div id="petAge" class="col">Age: "${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
+			document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
+			document.getElementById('pet-ident').innerHTML=`<div id="petID" class="col">ID #: ${pet.petID}</div><div id="petName" class="col">Name: ${item.petName}</div>`;
+			document.getElementById('pet-kind').innerHTML=`<div id="petSpecies" class="col">Species: ${pet.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
+			document.getElementById('pet-stats').innerHTML=`<div id="petSex" class="col">Sex: ${pet.petSex}</div><div id="petAge" class="col">Age: ${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
 			
 			// TODO: this area for medication pagination
-			// This should add all medications taken by the pet as a card. Pagination can be added later.
+			// This should add all medications taken by the pet as cards. Pagination can be added later.
 			// creates a card and APPENDS it to the innerHTML to create multiple cards.
-			document.getElementByID('medication-pages').innerHTML+=`<div class="card" style="width: 18rem;">
-				<img class="card-img-top" src="..." alt="Card image cap">
-				<div class="card-body">
-					<h5 class="card-title">${item.medicationName}</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				</div>
-			</div>`
+			// run a loop through medications, check that USERID and PETID in medication object matches current pet.
+			// need to pull medicationLog from jsonBlob.
+			database.medicationArray(quotes.documentID,function(item){
+				for(let i=0;i<item.medicationLog.length;i++){
+					// if PetID matches, add medication page
+					if(item.medicationLog[i].petID==pet.petID){
+						// TODO: add a text field where user can write when they gave the medicine.
+						document.getElementByID('medication-pages').innerHTML+=`<div class="card" style="width: 18rem;">
+							<img class="card-img-top" src="..." alt="Card image cap">
+								<div class="card-body">
+									<h5 class="card-title">${item.medicationName}</h5>
+									<p class="card-text">Dose Amount:${item.dosage}  Timing:${item.numberOfDailyDoses}<br/></p>
+									<a href="#" class="btn btn-primary">Medication Details</a>
+								</div>
+							</div>`
+					}
+					else{
+					// else Do nothing
+					}
+				}
+			});
 			
-
+			
+			
+			// handles the delete button for the information. Oh god we gotta fix the index passing in.
+			// TODO: Fix delete button so it doesn't delete the user.
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
 				database.delete(quotes.documentID,index);
