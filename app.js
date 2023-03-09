@@ -80,6 +80,7 @@ const quotes={
 					// console.log("What is in item?");
 					// item returns medicationLog as array
 					// console.log(item);
+					
 					// if PetID matches, add medication page
 					if(item[i].petID==pet.petID){
 						//troubleshooting
@@ -90,7 +91,7 @@ const quotes={
 								<div class="card-body">
 									<h5 class="card-title">${item[i].medicationName}</h5>
 									<p class="card-text">Dose Amount: ${item[i].dosage} <br/> Timing: ${item[i].numberOfDailyDoses}<br/></p>
-									<a href="#" class="btn btn-primary">Medication Details</a>
+									<a href="medicationdetail.html?index=${i}" class="btn btn-primary">Medication Details</a>
 								</div>
 							</div>`
 					}
