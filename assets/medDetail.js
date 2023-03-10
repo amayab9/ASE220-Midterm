@@ -32,6 +32,9 @@ function writeToDiv(med,pet){
             Dosage: ${med.dosage}<br />
             Number of Doses a day: ${med.numberOfDailyDoses}<br />
             Medication Notes: ${med.medNotes}<br />
+    </div>
+    <div id="buttons" class="col-12">
+    <a href="petDetail.html?petID=${pet.petID}">Back to Pet</a> | <a id="btn-edit" href="">Edit Info</a> | <button type="button" id="btn-delete">Delete Info</button>
     </div>`;
 };
 
