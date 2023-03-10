@@ -1,13 +1,20 @@
 const quotes={
 	documentID:'1079866388960788480',
 	index:function(){
-		
+		// Defines the callback function in the parameter slot. This is calling the index function in database.js
 		database.index(quotes.documentID,function(items){
 			document.getElementById('quotes').innerHTML='';
-			// Steps through the array of quotes
-			for(let i=0;i<items.length;i++){
+			console.log("We have made it to database.index in app.js");
+			// This previously stepped through the array of quotes
+			// We don't have an array of quotes so what we want is one of the three arrays in the BlobObject.
+			// items.users.length! We want the length of the users array so hardcoding it for that.
+			for(let i=0;i<items.users.length;i++){
 				// finds the specific quote at index location
-				let user=items[i];
+				// we want the User Array and a Specific User at index. 
+				let user=items.users[i];
+				// troubleshooting
+				// console.log("Do we have a specific user?");
+				// console.log(user);
 				// declares el as a created Div element.
 				let el=document.createElement('div');
 				// writes HTML to the new el element.
@@ -15,40 +22,63 @@ const quotes={
 						<blockquote>
 							<em><a href="detail.html?index=${i}">${user.firstName} ${user.lastName}</a></em>
 						</blockquote>
-						${quote.author}
 						<hr />
 					</div>`;
 					// adds new HTML to the index.html page.
 				document.getElementById('quotes').append(el);
 			}
+			// quick and dirty way to see all pets so I can test my pets detail pages.
+			for(let i=0;i<items.pets.length;i++){
+				let pet=items.pets[i];
+				// troubleshooting
+				// console.log("Do we have a specific pet?");
+				// console.log(pet);
+				let elm=document.createElement('div');
+				elm.innerHTML=`<div>
+				<blockquote>
+					<em><a href="petDetail.html?index=${i}">${pet.petName} ${pet.petType}</a></em>
+				</blockquote>
+				<hr />
+				</div>`;
+				document.getElementById('pets').append(elm);
+			}
 		});
 	},
-	// For fetching the info for userDetail page
-	userDetail:function(index){
-		database.detail(quotes.documentID,index,function(item){
+	userdetails:function(index){
+		database.index(quotes.documentID,index,function(item){
+			let user = item;
 			document.getElementById('loading').style.display='none';
-			document.getElementByID('user-firstName').innerText=`<div id="userFirstName" class="col">First Name: ${item.users[i].firstName}</div>`; //get user's first name and display
-			document.getElementById('user-lastName').innerText=`<div id="userLastName" class="col">Last Name: +${item.users[i].lastName}+</div><div id="petName" class="col">Name: ${item.petName}</div>`; // get user's last name and display
-			document.getElementById('user-petNames').innerText=`<div id="usersPets" class="col">Pets: ${item.pets.userID[i]}</div>`; //calls inside the object -> pets -> search in pets for the userID in which matches the User clicked
+			document.getElementById('user-email').innerHTML=`<div id="emailAddress" class="col">${users.emailAddress}</div>`;
+			document.getElementById('user-fn').innerHTML=`<div id="userfn" class="col">${users.firstName}</div>`;
+			document.getElementById('user-ln').innerHTML=`<div id="userln" class="col">${users.lastName}</div>`;
 
-			let deleteButton=document.getElementById('btn-delete');
-			deleteButton.addEventListener('click',function(){
-				database.delete(quotes.documentID,index);
-			});
-		});
+			database.usersArray(quotes.documentID,function(item){
+				for(let i=0;i<item.length;i++){
+					if(item[i].userID==users.userID){
+						console.log(item[i]);
+						document.getElementById('user-page').innerHTML+=`<div class="card" style="max-width:400px";>
+						<div class="card-body">
+                    <h5 class="card-title">${item.firstName} ${item.lastName}</h5>
+                      <p class="card-text">${item.emailAddress}</p>
+                    <button a href="index.html?index=${item.userID}" type="button" class="btn btn-dark">View</a></button>
+                  </div>`;
+					}
+				}
+			}
+			)
+		}
+		)
 	},
-	// For fetching the info for petDetail page
-	petdetail:function(index){
-		// TODO: change item.petX to whatever needs to be changed.
-		database.detail(quotes.documentID,index,function(item){
+	//amaya's userdetails
+	// For fetching the info for userDetail page
+	userdetailpage:function(index){
+		database.userDetail(quotes.documentID,index,function(item){
+			let user = item;
 			document.getElementById('loading').style.display='none';
-			document.getElementByID('pet-photo').innerText=`<div id="petPhoto" class="col">${item.pet[i].petPhoto}</div>`;
-			document.getElementById('pet-ident').innerText=`<div id="petID" class="col">ID #: +${item.petID}+</div><div id="petName" class="col">Name: ${item.petName}</div>`;
-			document.getElementById('pet-kind').innerText=`<div id="petSpecies" class="col">Species: ${item.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
-			document.getElementByID('pet-stats').innerText=`<div id="petSex" class="col">Sex: ${item.petSex}</div><div id="petAge" class="col">Age: "${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
+			document.getElementById('user-firstName').innerHTML=`<div id="userFirstName" class="col">First Name:${user.firstName}</div>`; //get user's first name and display
+			document.getElementById('user-lastName').innerHTML=`<div id="userLastName" class="col">Last Name: ${user.lastName}</div>`; // get user's last name and display
+			document.getElementById('user-petNames').innerHTML=`<div id="usersPets" class="col">Pets: ${user.pets.userID}</div>`;//calls inside the object -> pets -> search in pets for the userID in which matches the User clicked
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
-			
-			// TODO: this area for medication pagination
 
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
