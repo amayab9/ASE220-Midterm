@@ -1,9 +1,9 @@
 const quotes={
-	documentID:'101079866388960788480',
+	documentID:'1079866388960788480',
 	index:function(){
-
 		database.index(quotes.documentID,function(items){
 			document.getElementById('quotes').innerHTML='';
+			console.log("We have made it to database.index in app.js");
 
 			for(let i=0;i<items.users.length;i++){
 
@@ -11,13 +11,12 @@ const quotes={
 
 				let el=document.createElement('div');
 
-				el.innerHTML=`<div>
-				<blockquote>
-							<em><a href="detail.html?index=${i}">${user.firstName} ${user.lastName}</a></em>
-						</blockquote>
-						<hr />
-					</div>`;
-
+				el.innerHTML=`<div class="card" style="max-width:400px";>
+				<div class="card-body">
+			<h5 class="card-title">${item.firstName} ${item.lastName}</h5>
+			  <p class="card-text">${item.emailAddress}</p>
+			<button a href="index.html?index=${item.userID}" type="button" class="btn btn-dark">View</a></button>
+		  </div>`;
 
 				document.getElementById('quotes').append(el);
 			}
