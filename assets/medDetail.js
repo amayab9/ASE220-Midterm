@@ -5,20 +5,23 @@ async function fetchFunction(){
     // Fetch the JSON 
     const response = api.GET('1079866388960788480', function(response) {
         const medicationID = getAllUrlParams().medicationid;
-        let medications= response.data.medications.filter(function (el){
-            return el.medicationID === medicationID;
+        //Create an Array containting the medication object with the matching ID
+        let medications= response.data.medications.filter(function (medList){
+            return medList.medicationID === medicationID;
         });
-        console.log(medications);
+        //Set the only element in created array to a constant
         const med = medications[0];
-        const pets = response.data.pets.filter(function (pet){
-            return pet.petID === med.petID;
+        //Create an Array containting the pet object with the matching ID
+        let pets = response.data.pets.filter(function (petList){
+            return petList.petID === med.petID;
         });
+        //Set the only element in created array to a constant
         const pet= pets[0];
         writeToDiv(med,pet);
     }); 
 }
-// write information to html divs
-function writeToDiv(med, pet){
+// write information to html divs passing in the two const med and pet
+function writeToDiv(med,pet){
     document.getElementById('medInfo').innerHTML +=`
     <div id="medName" class="container">
         <h1>${med.medicationName}</h1>
@@ -27,10 +30,10 @@ function writeToDiv(med, pet){
             Medication Type: ${med.medType}<br />
             Pet: ${pet.petName}<br />
             Dosage: ${med.dosage}<br />
+            Number of Doses a day: ${med.numberOfDailyDoses}<br />
             Medication Notes: ${med.medNotes}<br />
-        
     </div>`;
-}
+};
 
 
 
