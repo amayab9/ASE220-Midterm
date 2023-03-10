@@ -3,9 +3,9 @@ const database={
 		api.GET(documentID,function(response){
 			callback(response.data);
 			// troubleshooting stuff, these fire *after* the database.index function in app.js
-			// console.log("database.index fired.");
+			console.log("database.index fired.");
 			// this returns the JSONBLOB object. so: Object{ User{}; Pet{}; Medication{}};
-			// console.log(response.data);
+			console.log(response.data.users);
 		});
 	},
 	// keep unchanged as a reference on where to change stuff for specific pages.
@@ -26,14 +26,8 @@ const database={
 	medicationArray:function(documentID,callback){
 		api.GET(documentID,function(response){
 			// this should return the /entire/ medicationLog array. Messy, unwieldy, but good enough for now.
-			// TODO: fix this to be better. pass in petID?? 
-			// could run a loop through medicationLog as if pulling new detail page if petID matches here and in 
-			
-			// troubleshooting
-			// console.log("Inside database.medicationArray function.")
-			// console.log(response.data.medicationLog);
-			
-			callback(response.data.medicationLog);
+			// TODO: fix this to be better. pass in petID and return array of only medications taken by that pet.
+			callback(response.data.medications);
 		});
 	},
 	update:function(documentID,index,newData){

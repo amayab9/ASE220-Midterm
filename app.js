@@ -3,7 +3,7 @@ const quotes={
 	index:function(){
 		// Defines the callback function in the parameter slot. This is calling the index function in database.js
 		database.index(quotes.documentID,function(items){
-			document.getElementById('quotes').innerHTML='';
+			document.getElementById('quotes').innerText='Loading Index page...';
 			console.log("We have made it to database.index in app.js");
 			// This previously stepped through the array of quotes
 			// We don't have an array of quotes so what we want is one of the three arrays in the BlobObject.
@@ -12,9 +12,6 @@ const quotes={
 				// finds the specific quote at index location
 				// we want the User Array and a Specific User at index. 
 				let user=items.users[i];
-				// troubleshooting
-				// console.log("Do we have a specific user?");
-				// console.log(user);
 				// declares el as a created Div element.
 				let el=document.createElement('div');
 				// writes HTML to the new el element.
@@ -30,9 +27,6 @@ const quotes={
 			// quick and dirty way to see all pets so I can test my pets detail pages.
 			for(let i=0;i<items.pets.length;i++){
 				let pet=items.pets[i];
-				// troubleshooting
-				// console.log("Do we have a specific pet?");
-				// console.log(pet);
 				let elm=document.createElement('div');
 				elm.innerHTML=`<div>
 				<blockquote>
@@ -73,18 +67,10 @@ const quotes={
 			// run a loop through medications, check that userID and petID in medication object matches current pet.
 			// need to pull medicationLog from jsonBlob.
 
-			// TODO: troubleshoot this
 			database.medicationArray(quotes.documentID,function(item){
 				for(let i=0;i<item.length;i++){
-					// troubleshooting...
-					// console.log("What is in item?");
-					// item returns medicationLog as array
-					// console.log(item);
-					
 					// if PetID matches, add medication page
 					if(item[i].petID==pet.petID){
-						//troubleshooting
-						console.log(item[i]);
 						// TODO: add a text field where user can write when they gave the medicine.
 						document.getElementById('medication-pages').innerHTML+=`<div class="card" style="width: 18rem;">
 							<img class="card-img-top" src="..." alt="Card image cap">
