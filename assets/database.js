@@ -54,6 +54,14 @@ const database={
 			});
 		});
 	},
+	petDelete:function(documentID,index){
+		api.GET(documentID,function(response){
+			response.data.pets.splice(index,1);
+			api.PUT(documentID,response.data,function(){
+				alert('The quote has been deleted. Please go back to the home page');
+			});
+		});
+	},
 	create:function(documentID,newData){
 		api.GET(documentID,function(response){
 			response.data.push(newData);

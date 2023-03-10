@@ -92,7 +92,7 @@ const quotes={
 			// TODO: Fix delete button so it doesn't delete the user.
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
-				database.delete(quotes.documentID,index);
+				database.petDelete(quotes.documentID,index);
 			});
 		});
 	},
