@@ -38,7 +38,10 @@ function writeToDiv(med,pet){
     </div>`;
 };
 
+let deleteButton=document.getElementById('btn-delete');
+			deleteButton.addEventListener('click',function(){
+				database.petDelete(quotes.documentID,index);
 
-
+            });
 
 document.addEventListener('DOMContentLoaded', async () => await fetchFunction(), false);
