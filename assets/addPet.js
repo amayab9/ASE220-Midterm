@@ -2,15 +2,17 @@
 async function fetchFunction(){
     // Fetch the JSON 
     const response = api.GET('1079866388960788480', function(response) { 
-        const userID = getAllUrlParams().userID;
+        const userID = getAllUrlParams().userid;
         //Create an Array containting the medication object with the matching ID
-        let users= response.data.users.filter(function (userList){
+        let users = response.data.users.filter(function (userList){
             return userList.userID === userID;
         });
+        
         //Set the only element in created array to a constant
         const user = users[0];
+        writeForm(user);
        }); 
-       writeForm(user);
+       
 }
 
 function writeForm(user){
@@ -20,14 +22,54 @@ document.getElementById('formDiv').innerHTML +=`
 </div>
 <div id="form">
 <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Email address</label>
-  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  <label for="petNameFeild" class="form-label">Pet Name</label>
+  <input type="petName" class="form-control" id="petNameFeild">
 </div>
 <div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  <label for="petTypeFeild" class="form-label">Pet Type</label>
+  <input type="petType" class="form-control" id="petTypeFeild">
+</div>
+<div class="mb-3">
+  <label for="petBreedFeild" class="form-label">Pet Breed</label>
+  <input type="petBreed" class="form-control" id="petBreedFeild">
+</div>
+<div class="mb-3">
+  <label for="petSexFeild" class="form-label">Pet Gender</label>
+  <input type="petSex" class="form-control" id="petSexFeild">
+</div>
+<div class="mb-3">
+  <label for="petWeightFeild" class="form-label">Pet Weight</label>
+  <input type="petWeight" class="form-control" id="petWeightFeild">
+</div>
+<div class="mb-3">
+  <label for="petDOBFeild" class="form-label">Pet Date of Birth</label>
+  <input type="petDOB" class="form-control" id="petDOBFeild">
+</div>
+<div class="col-auto">
+<button type="submit" class="btn btn-primary mb-3">Add Pet</button>
 </div></div>
-<div>
-<a href="index.html">Back to User Details</a>
+
 </div>`};
+
+const createPet = function(){
+    document.querySelector('form').addEventListener('submit',function(e){
+        e.preventDefault();
+        let petName=document.querySelector('form input[name=petName]');
+        let petType=document.querySelector('form textarea[name=petType]');
+        let petSex=document.querySelector('form input[name=petSex]');
+        let petBreed=document.querySelector('form textarea[name=petBreed]');
+        let petWeight=document.querySelector('form input[name=petWeight]');
+        let petDOB=document.querySelector('form textarea[name=petDOB]');
+        let newPet={
+            petName: petName.value,
+            petType: petType.value,
+            petSex: petSex.value,
+            petBreed: petBreed.value,
+            petWeight: petWeight.value,
+            petDOB: petDOB.value
+        }
+        database.create(response.documentID,newPet);
+    });
+}
 document.addEventListener('DOMContentLoaded', async () => await fetchFunction(), false);
+

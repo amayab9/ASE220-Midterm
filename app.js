@@ -31,7 +31,7 @@ const Items={
 			});
 		});
 	},
-	create:function(){
+	create: function(){
 		document.querySelector('form').addEventListener('submit',function(e){
 			e.preventDefault();
 			let author=document.querySelector('form input[name=author]');
