@@ -42,8 +42,8 @@ document.getElementById('formDiv').innerHTML +=`
   <input type="petWeight" class="form-control" id="petWeightFeild">
 </div>
 <div class="mb-3">
-  <label for="petDOBFeild" class="form-label">Pet Date of Birth</label>
-  <input type="petDOB" class="form-control" id="petDOBFeild">
+  <label for="petDoBFeild" class="form-label">Pet Date of Birth</label>
+  <input type="petDoB" class="form-control" id="petDoBFeild">
 </div>
 <div class="col-auto">
 <button type="submit" class="btn btn-primary mb-3">Add Pet</button>
@@ -59,14 +59,16 @@ const createPet = function(){
         let petSex=document.querySelector('form input[name=petSex]');
         let petBreed=document.querySelector('form textarea[name=petBreed]');
         let petWeight=document.querySelector('form input[name=petWeight]');
-        let petDOB=document.querySelector('form textarea[name=petDOB]');
+        let petDoB=document.querySelector('form textarea[name=petDoB]');
         let newPet={
+            //Add Pet ID
+            userID: user.userID,
             petName: petName.value,
             petType: petType.value,
             petSex: petSex.value,
             petBreed: petBreed.value,
             petWeight: petWeight.value,
-            petDOB: petDOB.value
+            petDoB: petDoB.value
         }
         database.create(response.documentID,newPet);
     });
