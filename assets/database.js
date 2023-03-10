@@ -38,6 +38,14 @@ const database={
 			});
 		});
 	},
+	petUpdate:function(documentID,index,newData){
+		api.GET(documentID,function(response){
+			response.data.pets[index]=newData;
+			api.PUT(documentID,response.data,function(){
+				alert('The pet has been updated. Please go back to the home page');
+			});
+		});
+	},
 	delete:function(documentID,index){
 		api.GET(documentID,function(response){
 			response.data.splice(index,1);

@@ -56,17 +56,16 @@ const quotes={
 		database.petDetail(quotes.documentID,index,function(item){
 			let pet = item;
 			document.getElementById('loading').style.display='none';
-			document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
+			// document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
 			document.getElementById('pet-ident').innerHTML=`<div id="petID" class="col">ID #: ${pet.petID}</div><div id="petName" class="col">Name: ${item.petName}</div>`;
 			document.getElementById('pet-kind').innerHTML=`<div id="petSpecies" class="col">Species: ${pet.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
-			document.getElementById('pet-stats').innerHTML=`<div id="petSex" class="col">Sex: ${pet.petSex}</div><div id="petAge" class="col">Age: ${item.petAge}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
-			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
+			document.getElementById('pet-stats').innerHTML=`<div id="petSex" class="col">Sex: ${pet.petSex}</div><div id="petAge" class="col">Age: ${item.petDoB}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
+			document.getElementById('btn-edit').setAttribute('href',`petEdit.html?index=${index}`);
 			
 			// This should add all medications taken by the pet as cards. Pagination can be added later.
 			// creates a card and APPENDS it to the innerHTML to create multiple cards.
 			// run a loop through medications, check that userID and petID in medication object matches current pet.
 			// need to pull medicationLog from jsonBlob.
-
 			database.medicationArray(quotes.documentID,function(item){
 				for(let i=0;i<item.length;i++){
 					// if PetID matches, add medication page
@@ -124,6 +123,41 @@ const quotes={
 					quote:quote.value
 				}
 				database.update(quotes.documentID,index,newQuote);
+			});
+		});
+	},
+	petupdate:function(index){
+		database.petDetail(quotes.documentID,index,function(item){
+			document.getElementById('loading').style.display='none';
+			document.querySelector('form input[name=petName]').value=item.petName;
+			document.querySelector('form input[name=userID]').value=item.userID;
+			document.querySelector('form input[name=petTye]').value=item.petType;
+			document.querySelector('form input[name=petBreed]').value=item.petBreed;
+			document.querySelector('form input[name=petSex]').value=item.petSex;
+			document.querySelector('form input[name=petDoB]').value=item.petDoB;
+			document.querySelector('form input[name=petWeight]').value=item.petWeight;
+
+			document.querySelector('form').addEventListener('submit',function(e){
+				e.preventDefault();
+				let petName=document.querySelector('form input[name=petName]');
+				let userID=document.querySelector('form input[name=userID]');
+				let petType=document.querySelector('form input[name=petTye]');
+				let petBreed=document.querySelector('form input[name=petBreed]');
+				let petSex=document.querySelector('form input[name=petSex]');
+				let petDoB=document.querySelector('form input[name=petDoB]');
+				let petWeight=document.querySelector('form input[name=petWeight]');
+				// petID purposely stays the same.
+				let newPet={
+					petID:item.petID,
+					userID:userID.value,
+					petName:petName.value,
+					petType:petType.value,
+					petSex:petSex.value,
+					petBreed:petBreed.value,
+					petWeight:petWeight.value,
+					petDoB:petDoB.value,
+				}
+				database.petUpdate(quotes.documentID,index,newPet);
 			});
 		});
 	}
