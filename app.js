@@ -53,15 +53,15 @@ const quotes={
 			document.getElementById('user-firstName').innerHTML=`<div id="userFirstName" class="col">First Name:${user.firstName}</div>`; //get user's first name and display
 			document.getElementById('user-lastName').innerHTML=`<div id="userLastName" class="col">Last Name: ${user.lastName}</div>`; // get user's last name and display
 			//document.getElementById('user-petNames').innerHTML=`<div id="usersPets" class="col">Pets: ${user.pets.userID}</div>`;//calls inside the object -> pets -> search in pets for the userID in which matches the User clicked
-			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
+			document.getElementById('btn-edit').setAttribute('href',`userEdit.html?index=${index}`);
 
 			database.userPetArray(quotes.documentID,function(item){
 				for(let i=0;i<item.length;i++){
 					
 					// if user ID in pets matches user ID 
-					if(item[i].userID==user.userID){
+					if(item[i].userID==pets.userID){
 						//TODO: link to the specific pet in order to get pet details.
-						document.getElementById('user-petNames').innerHTML+=`<div id="usersPets" class="col">Pets: ${item[i].petName}</div>`;
+						document.getElementById('user-petNames').innerHTML+=`<div id="usersPets" class="col">Pets: <a href="petDetail.html?pets=${item[i].petID}>${item[i].petName}</a></div>`;
 					}
 					else{
 					// else Do nothing
@@ -71,7 +71,7 @@ const quotes={
 
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
-				database.delete(quotes.documentID,index);
+				database.userDelete(quotes.documentID,index);
 			});
 		});
 	},
@@ -102,6 +102,36 @@ const quotes={
 					quote:quote.value
 				}
 				database.update(quotes.documentID,index,newQuote);
+			});
+		});
+	},
+	userDelete:function(documentID,index){
+		api.GET(documentID,function(response){
+			response.data.users.splice(index,1);
+			api.PUT(documentID,response.data,function(){
+				alert('The user has been deleted. Please go back to the home page');
+			});
+		});
+	},
+	userupdate:function(index){
+		database.petDetail(quotes.documentID,index,function(item){
+			document.getElementById('loading').style.display='none';
+			document.querySelector('form input[name=userFirstNameInput]').value=item.userFirstNameInput;
+			document.querySelector('form input[name=userLastNameInput]').value=item.userLastNameInput;
+			document.querySelector('form input[name=userEmailInput]').value=item.userEmailInput;
+
+			document.querySelector('form').addEventListener('submit',function(e){
+				e.preventDefault();
+				let userFirstName=document.querySelector('form input[name=userFirstNameInput]');
+				let userLastName=document.querySelector('form input[name=userLastNameInput]');
+				let userEmail=document.querySelector('form input[name=userEmailInput]');
+
+				let newUser={
+					userFirstName:item.firstName,
+					userLastName:item.lastName,
+					userEmail:item.emailAddress
+				}
+				database.userUpdate(quotes.documentID,index,newUser);
 			});
 		});
 	}

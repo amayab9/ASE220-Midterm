@@ -28,6 +28,13 @@ const database={
 			callback(response.data[index]);
 		});
 	},
+	userDetail:function(documentID,index,callback){
+		api.GET(documentID,function(response){
+			// this line specifies getting the specific pet.
+			// response.data is the entire JSONBlob so specify we want ot grab from the pets array.
+			callback(response.data.users[index]);
+		});
+	},
 	update:function(documentID,index,newData){
 		api.GET(documentID,function(response){
 			response.data[index]=newData;
@@ -36,9 +43,25 @@ const database={
 			});
 		});
 	},
+	userUpdate:function(documentID,index,newData){
+		api.GET(documentID,function(response){
+			response.data.users[index]=newData;
+			api.PUT(documentID,response.data,function(){
+				alert('The user has been updated. Please go back to the home page');
+			});
+		});
+	},
 	delete:function(documentID,index){
 		api.GET(documentID,function(response){
 			response.data.splice(index,1);
+			api.PUT(documentID,response.data,function(){
+				alert('The quote has been deleted. Please go back to the home page');
+			});
+		});
+	},
+	userDelete:function(documentID,index){
+		api.GET(documentID,function(response){
+			response.data.users.splice(index,1);
 			api.PUT(documentID,response.data,function(){
 				alert('The quote has been deleted. Please go back to the home page');
 			});
@@ -52,16 +75,9 @@ const database={
 			});
 		});
 	},
-	userDetail:function(documentID,index,callback){
-		api.GET(documentID,function(response){
-			// this line specifies getting the specific pet.
-			// response.data is the entire JSONBlob so specify we want ot grab from the pets array.
-			callback(response.data.users[index]);
-		});
-	},
 	userPetArray:function(documentID,callback){
 		api.GET(documentID,function(response){
-			callback(response.data.pets[index].petName);
+			callback(response.data.pets[index]);
 		});
 	},
 }
