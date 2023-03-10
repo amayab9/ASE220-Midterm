@@ -44,31 +44,6 @@ const quotes={
 			}
 		});
 	},
-	userdetails:function(index){
-		database.index(quotes.documentID,index,function(item){
-			let user = item;
-			document.getElementById('loading').style.display='none';
-			document.getElementById('user-email').innerHTML=`<div id="emailAddress" class="col">${users.emailAddress}</div>`;
-			document.getElementById('user-fn').innerHTML=`<div id="userfn" class="col">${users.firstName}</div>`;
-			document.getElementById('user-ln').innerHTML=`<div id="userln" class="col">${users.lastName}</div>`;
-
-			database.usersArray(quotes.documentID,function(item){
-				for(let i=0;i<item.length;i++){
-					if(item[i].userID==users.userID){
-						console.log(item[i]);
-						document.getElementById('user-page').innerHTML+=`<div class="card" style="max-width:400px";>
-						<div class="card-body">
-                    <h5 class="card-title">${item.firstName} ${item.lastName}</h5>
-                      <p class="card-text">${item.emailAddress}</p>
-                    <button a href="index.html?index=${item.userID}" type="button" class="btn btn-dark">View</a></button>
-                  </div>`;
-					}
-				}
-			}
-			)
-		}
-		)
-	},
 	//amaya's userdetails
 	// For fetching the info for userDetail page
 	userdetailpage:function(index){
@@ -77,8 +52,22 @@ const quotes={
 			document.getElementById('loading').style.display='none';
 			document.getElementById('user-firstName').innerHTML=`<div id="userFirstName" class="col">First Name:${user.firstName}</div>`; //get user's first name and display
 			document.getElementById('user-lastName').innerHTML=`<div id="userLastName" class="col">Last Name: ${user.lastName}</div>`; // get user's last name and display
-			document.getElementById('user-petNames').innerHTML=`<div id="usersPets" class="col">Pets: ${user.pets.userID}</div>`;//calls inside the object -> pets -> search in pets for the userID in which matches the User clicked
+			//document.getElementById('user-petNames').innerHTML=`<div id="usersPets" class="col">Pets: ${user.pets.userID}</div>`;//calls inside the object -> pets -> search in pets for the userID in which matches the User clicked
 			document.getElementById('btn-edit').setAttribute('href',`edit.html?index=${index}`);
+
+			database.userPetArray(quotes.documentID,function(item){
+				for(let i=0;i<item.length;i++){
+					
+					// if user ID in pets matches user ID 
+					if(item[i].userID==user.userID){
+						//TODO: link to the specific pet in order to get pet details.
+						document.getElementById('user-petNames').innerHTML+=`<div id="usersPets" class="col">Pets: ${item[i].petName}</div>`;
+					}
+					else{
+					// else Do nothing
+					}
+				}
+			});
 
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
