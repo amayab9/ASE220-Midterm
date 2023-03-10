@@ -50,6 +50,64 @@ const quotes={
 		)
 	},
 
+	for(let i=0;i<items.medications.length;i++){
+		let med=items.medications[i];
+		let elm=document.createElement('div');
+		elm.innerHTML=`<div>
+		<blockquote>
+			<em><a href="medicationEdit.html?index=${i}">${medications.medicationName} ${medications.medType}</a></em>
+		</blockquote>
+		<hr />
+		</div>`;
+		document.getElementById('medications').append(elm);
+	}
+},
+
+
+MedEdit:function(index){
+	database.medsedit(quotes.documentID,function(item){
+		let medsedit = item;
+		document.getElementById('loading').style.display='none';
+		document.getElementById('med-name').innerHTML=`<div id="medname" class="col">${medications.medicationName}</div>`;
+		document.getElementById('med-type').innerHTML=`<div id="medtype" class="col">${medications.medType}</div>`;
+		document.getElementById('dosage-amt').innerHTML=`<div id="doseamt" class="col">${medications.dosage}</div>`;
+		document.getElementById('daily-amt').innerHTML=`<div id="dailyamt" class="col">${medications.numberOfDailyDoses}</div>`;
+		document.getElementById('med-notes').innerHTML=`<div id="mednotes" class="col">${medications.medNotes}</div>`;
+
+			for(let i=0;i<item.length;i++){
+
+				if(item[i].medicationID==medications.medicationID){
+					console.log(item[i]);
+					document.getElementById('meds-page').innerHTML+=`<div class="form-group">
+					<label for="exampleFormControlInput1">Medication Name</label>
+					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.medicationName}">
+					</div>
+					<div class="form-group">
+					<label for="exampleFormControlInput1">Medication Type</label>
+					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.medType}">
+					</div>
+					<div class="form-group">
+					<label for="exampleFormControlInput1">Amount Per Day</label>
+					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.dosage}">
+					</div>
+					<div class="form-group">
+					<label for="exampleFormControlInput1">Doses Per Day</label>
+					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.numberOfDailyDoses}">
+					</div>
+					<div class="form-group">
+					<label for="exampleFormControlInput1">Medication Notes</label>
+					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.medNotes}">
+				</div>
+					</div>
+					<button class="btn btn-dark" type="submit">Submit</button>
+					<button class="btn btn-light" type="cancel">Cancel</button>
+				</form>`;
+				}
+			}
+		}
+		)
+	},
+
 
 	detail:function(index){
 		database.detail(quotes.documentID,index,function(item){

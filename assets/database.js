@@ -1,6 +1,7 @@
 const database={
 	index:function(documentID,callback){
 		api.GET(documentID,function(response){
+			console.log(response.data.users);
 			callback(response.data);
 		});
 	},
