@@ -127,6 +127,37 @@ const quotes={
 			});
 		});
 	},
+	medupdates:function(index){
+		database.medicationDetail(quotes.documentID,index,function(item){
+			console.log(item);
+			document.querySelector('form input[name=medicationName]').value=item.medicationName;
+			document.querySelector('form input[name=medType]').value=item.medType;
+			document.querySelector('form input[name=dosage]').value=item.dosage;
+			document.querySelector('form input[name=numberOfDailyDoses]').value=item.numberOfDailyDoses;
+			document.querySelector('form input[name=medNotes]').value=item.medNotes;
+			document.querySelector('form input[name=medicationID]').value=item.medicationID;
+
+			document.querySelector('form').addEventListener('submit',function(e){
+				e.preventDefault();
+				let medicationName=document.querySelector('form input[name=medicationName]');
+				let medType=document.querySelector('form input[name=medType]');
+				let dosage=document.querySelector('form input[name=dosage]');
+				let numberOfDailyDoses=document.querySelector('form input[name=numberOfDailyDoses]');
+				let medNotes=document.querySelector('form input[name=medNotes]');
+				let medicationID=document.querySelector('form input[name=medicationID]');
+
+				let newMed={
+					medicationName:medicationName.value,
+					medType:medType.value,
+					dosage:dosage.value,
+					numberOfDailyDoses:numberOfDailyDoses.value,
+					medNotes:medNotes.value,
+					medicationID:medicationID.value,
+				}
+				database.medicationEdit(quotes.documentID,index,newMed);
+			});
+		});
+	},
 	petupdate:function(index){
 		database.petDetail(quotes.documentID,index,function(item){
 			document.getElementById('loading').style.display='none';

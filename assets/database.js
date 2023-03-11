@@ -16,6 +16,19 @@ const database={
 			callback(response.data.pets[index]);
 		});
 	},
+	medicationEdit:function(documentID,index,newData){
+		api.GET(documentID,function(response){
+			response.data.medications[1]=newData;
+			api.PUT(documentID,response.data,function(){
+				alert('The medication has been updated');
+			});
+		});
+	},
+	medicationDetail:function(documentID,index,callback){
+		api.GET(documentID,function(response){
+			callback(response.data.medications[1]);
+		});
+	},
 	// this is actually an alteration of database.index
 	medicationArray:function(documentID,callback){
 		api.GET(documentID,function(response){
