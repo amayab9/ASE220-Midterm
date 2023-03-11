@@ -57,9 +57,19 @@ const quotes={
 			let pet = item;
 			document.getElementById('loading').style.display='none';
 			// document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
-			document.getElementById('pet-ident').innerHTML=`<div id="petID" class="col">ID #: ${pet.petID}</div><div id="petName" class="col">Name: ${item.petName}</div>`;
-			document.getElementById('pet-kind').innerHTML=`<div id="petSpecies" class="col">Species: ${pet.petType}</div><div id="petBreed" class="col">Breed: ${item.petBreed}</div>`;
-			document.getElementById('pet-stats').innerHTML=`<div id="petSex" class="col">Sex: ${pet.petSex}</div><div id="petAge" class="col">Age: ${item.petDoB}</div><div id="petWeight" class="col">Weight: ${item.petWeight}</div>`;
+			document.getElementById('pet-ident').innerHTML=`<div class="row justify-content-start">
+					<div id="petID" class="col-4">ID #: ${pet.petID}</div>
+					<div id="petName" class="col-4">Name: ${item.petName}</div>
+				</div>`;
+			document.getElementById('pet-kind').innerHTML=`<div class="row justify-content-start">
+					<div id="petSpecies" class="col-4">Species: ${pet.petType}</div>
+					<div id="petBreed" class="col-4">Breed: ${item.petBreed}</div>
+				</div>`;
+			document.getElementById('pet-stats').innerHTML=`<div class="row justify-content-start">
+					<div id="petSex" class="col-4">Sex: ${pet.petSex}</div>
+					<div id="petAge" class="col-4">Age: ${item.petDoB}</div>
+					<div id="petWeight" class="col-4">Weight: ${item.petWeight}</div>
+				</div>`;
 			document.getElementById('btn-edit').setAttribute('href',`petEdit.html?index=${index}`);
 			
 			// This should add all medications taken by the pet as cards. Pagination can be added later.
@@ -70,26 +80,23 @@ const quotes={
 				for(let i=0;i<item.length;i++){
 					// if PetID matches, add medication page
 					if(item[i].petID==pet.petID){
-						// TODO: add a text field where user can write when they gave the medicine.
-						document.getElementById('medication-pages').innerHTML+=`<div class="card" style="width: 18rem;">
-							<img class="card-img-top" src="..." alt="Card image cap">
-								<div class="card-body">
-									<h5 class="card-title">${item[i].medicationName}</h5>
-									<p class="card-text">Dose Amount: ${item[i].dosage} <br/> Timing: ${item[i].numberOfDailyDoses}<br/></p>
-									<a href="medicationdetail.html?index=${i}" class="btn btn-primary">Medication Details</a>
-								</div>
-							</div>`
+						document.getElementById('medication-pages').innerHTML+=`<div "col-sm-6">
+						<div class="card" style="width: 18rem;">
+							<div class="card-body">
+							<h5 class="card-title">${item[i].medicationName}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">${item[i].medType}</h6>
+							<p class="card-text">Dose Amount: ${item[i].dosage}</p><p class="card-text">Timing: ${item[i].numberOfDailyDoses}</p>
+							<p class="card-text">Notes: ${item[i].medNotes}</p>
+							</div>
+					  	</div>
+					  </div>`
 					}
 					else{
-					// else Do nothing
+						// else Do nothing
 					}
 				}
 			});
 			
-			
-			
-			// handles the delete button for the information. Oh god we gotta fix the index passing in.
-			// TODO: Fix delete button so it doesn't delete the user.
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
 				database.petDelete(quotes.documentID,index);
@@ -137,6 +144,7 @@ const quotes={
 			document.querySelector('form input[name=petDoB]').value=item.petDoB;
 			document.querySelector('form input[name=petWeight]').value=item.petWeight;
 
+			// this makes the button work.
 			document.querySelector('form').addEventListener('submit',function(e){
 				e.preventDefault();
 				let petName=document.querySelector('form input[name=petName]');
