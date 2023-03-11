@@ -24,27 +24,26 @@ const quotes={
 		// The info from the JSONBlob at the index is passed in as item, should be 1 pet from the array.
 		database.petDetail(quotes.documentID,petID,function(item){
 			const cPetID = getAllUrlParams().petid;
-			for(let i=0;i<item<length;i)
-			{{
+			for(let i=0;i<item.length;i++){{
 				if(item[i].petID==cPetID){
-					let pet = item;
+					let pet = item[i];
 					console.log(pet);
-				document.getElementById('loading').style.display='none';
-				// document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
-				document.getElementById('pet-ident').innerHTML=`<div class="row justify-content-start">
-						<div id="petID" class="col-4">ID #: ${pet.petID}</div>
-						<div id="petName" class="col-4">Name: ${pet.petName}</div>
-					</div>`;
-				document.getElementById('pet-kind').innerHTML=`<div class="row justify-content-start">
-						<div id="petSpecies" class="col-4">Species: ${pet.petType}</div>
-						<div id="petBreed" class="col-4">Breed: ${item.petBreed}</div>
-					</div>`;
-				document.getElementById('pet-stats').innerHTML=`<div class="row justify-content-start">
-						<div id="petSex" class="col-4">Sex: ${pet.petSex}</div>
-						<div id="petAge" class="col-4">Age: ${item.petDoB}</div>
-						<div id="petWeight" class="col-4">Weight: ${item.petWeight}</div>
-					</div>`;
-				document.getElementById('btn-edit').setAttribute('href',`petEdit.html?petID=${cPetID}`);
+					document.getElementById('loading').style.display='none';
+					// document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
+					document.getElementById('pet-ident').innerHTML=`<div class="row justify-content-start">
+							<div id="petID" class="col-4">ID #: ${pet.petID}</div>
+							<div id="petName" class="col-4">Name: ${pet.petName}</div>
+						</div>`;
+					document.getElementById('pet-kind').innerHTML=`<div class="row justify-content-start">
+							<div id="petSpecies" class="col-4">Species: ${pet.petType}</div>
+							<div id="petBreed" class="col-4">Breed: ${pet.petBreed}</div>
+						</div>`;
+					document.getElementById('pet-stats').innerHTML=`<div class="row justify-content-start">
+							<div id="petSex" class="col-4">Sex: ${pet.petSex}</div>
+							<div id="petDoB" class="col-4">DoB: ${pet.petDoB}</div>
+							<div id="petWeight" class="col-4">Weight: ${pet.petWeight}</div>
+						</div>`;
+					document.getElementById('btn-edit').setAttribute('href',`petEdit.html?petID=${cPetID}`);
 				}
 				
 				// This should add all medications taken by the pet as cards. Pagination can be added later.
@@ -54,7 +53,7 @@ const quotes={
 				database.medicationArray(quotes.documentID,function(item){
 					for(let i=0;i<item.length;i++){
 						// if PetID matches, add medication page
-						if(item[i].petID==pet.petID){
+						if(item[i].petID==cPetID){
 							document.getElementById('medication-pages').innerHTML+=`<div "col-sm-6">
 							<div class="card" style="width: 18rem;">
 								<div class="card-body">
