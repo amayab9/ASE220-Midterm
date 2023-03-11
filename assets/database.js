@@ -18,29 +18,10 @@ const database={
 	},
 	// this is actually an alteration of database.index
 	medicationArray:function(documentID,callback){
-		api.GET(documentID,function(response){			
-			callback(response.data.medicationLog);
-		});
-	},
-	// keep unchanged as a reference on where to change stuff for specific pages.
-	detail:function(documentID,index,callback){
 		api.GET(documentID,function(response){
-			callback(response.data[index]);
-		});
-	},
-	userDetail:function(documentID,index,callback){
-		api.GET(documentID,function(response){
-			// this line specifies getting the specific pet.
-			// response.data is the entire JSONBlob so specify we want ot grab from the pets array.
-			callback(response.data.users[index]);
-		});
-	},
-	update:function(documentID,index,newData){
-		api.GET(documentID,function(response){
-			response.data[index]=newData;
-			api.PUT(documentID,response.data,function(){
-				alert('The quote has been updated. Please go back to the home page');
-			});
+			// this should return the /entire/ medicationLog array. Messy, unwieldy, but good enough for now.
+			// TODO: fix this to be better. pass in petID and return array of only medications taken by that pet.
+			callback(response.data.medications);
 		});
 	},
 	userUpdate:function(documentID,index,newData){
@@ -51,11 +32,11 @@ const database={
 			});
 		});
 	},
-	delete:function(documentID,index){
+	petUpdate:function(documentID,index,newData){
 		api.GET(documentID,function(response){
-			response.data.splice(index,1);
+			response.data.pets[index]=newData;
 			api.PUT(documentID,response.data,function(){
-				alert('The quote has been deleted. Please go back to the home page');
+				alert('The pet has been updated. Please go back to the home page');
 			});
 		});
 	},
@@ -67,17 +48,13 @@ const database={
 			});
 		});
 	},
-	create:function(documentID,newData){
+	petDelete:function(documentID,index){
 		api.GET(documentID,function(response){
-			response.data.push(newData);
+			response.data.pets.splice(index,1);
 			api.PUT(documentID,response.data,function(){
-				alert('The quote has been added. Please go back to the home page');
+				alert('The quote has been deleted. Please go back to the home page');
 			});
 		});
 	},
-	userPetArray:function(documentID,callback){
-		api.GET(documentID,function(response){
-			callback(response.data.pets[index]);
-		});
-	},
+
 }
