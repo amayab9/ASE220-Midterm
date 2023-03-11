@@ -1,11 +1,11 @@
 {
 	"users": [
 	  {
-		  "userID": "1",
-		  "firstName": "Sarah",
-		  "lastName": "Riley",
-		  "emailAddress": "sarahmarierileyedu@gmail.com",
-		  "password": "password"
+		"userID": "1",
+		"firstName": "Sarah",
+		"lastName": "Riley",
+		"emailAddress": "sarahmarierileyedu@gmail.com",
+		"password": "password"
 	  },
 	  {
 		"userID": "2",
@@ -37,8 +37,7 @@
 		"petType": "Cat",
 		"petSex": "Female",
 		"petBreed": "Ragdoll",
-		"petWeight": "10",
-		"petDoB": "5/4/2014"
+		"petWeight": "10"
 	  },
 	  {
 		"petID": "2",
@@ -46,9 +45,8 @@
 		"petName": "Whiskers",
 		"petType": "Cat",
 		"petSex": "Female",
-		"petBreed": "Burman",
-		"petWeight": "11",
-		"petDoB": "3/17/2017"
+		"petBreed": "Birman",
+		"petWeight": "11"
 	  },
 	  {
 		"petID": "3",
@@ -57,8 +55,7 @@
 		"petType": "Dog",
 		"petSex": "Male",
 		"petBreed": "Pomeranian",
-		"petWeight": "12",
-		"petDoB": "9/9/2020"
+		"petWeight": "12"
 	  },
 	  {
 		"petID": "4",
@@ -67,8 +64,7 @@
 		"petType": "Bunny",
 		"petSex": "Female",
 		"petBreed": "French Lop",
-		"petWeight": "8",
-		"petDoB": "6/14/2021"
+		"petWeight": "8"
 	  }
 	],
 	"medications": [
@@ -82,17 +78,17 @@
 		"medNotes": "Take with food"
 	  },
 	  {
-		"medicationID": "2",
+		  "medicationID": "2",
 		"petID": "1",
 		"medicationName": "med2",
 		"medType": "Probiotic",
-		"dosage": "20 mg",
-		"numberOfDailyDoses": "1",
+		"dosage": "25 mg",
+		"numberOfDailyDoses": "2",
 		"medNotes": "Take with food"
 	  },
 	  {
 		"medicationID": "3",
-		"petID": "2",
+		"petID": "1",
 		"medicationName": "med3",
 		"medType": "Antidiareal",
 		"dosage": "20 mg",
@@ -101,7 +97,7 @@
 	  },
 	  {
 		"medicationID": "4",
-		"petID": "3",
+		"petID": "2",
 		"medicationName": "med4",
 		"medType": "Antibiotic",
 		"dosage": "15 mg",
@@ -110,7 +106,7 @@
 	  },
 	  {
 		"medicationID": "5",
-		"petID": "4",
+		"petID": "3",
 		"medicationName": "med5",
 		"medType": "Pain Killer",
 		"dosage": "25 mg",

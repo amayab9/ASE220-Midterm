@@ -1,19 +1,13 @@
 const database={
 	index:function(documentID,callback){
 		api.GET(documentID,function(response){
-			callback(response.data.users[index]);
-			// troubleshooting stuff, these fire *after* the database.index function in app.js
-			 console.log("database.index fired.");
-			 //this returns the JSONBLOB object. so: Object{ User{}; Pet{}; Medication{}};
-			 console.log(response.data.users);
+			callback(response.data.users);
 		});
 	},
 	// specifically for pet detail.
-	petDetail:function(documentID,index,callback){
+	petDetail:function(documentID,petID,callback){
 		api.GET(documentID,function(response){
-			// this line specifies getting the specific pet.
-			// response.data is the entire JSONBlob so specify we want ot grab from the pets array.
-			callback(response.data.pets[index]);
+			callback(response.data.pets);
 		});
 	},
 	medicationEdit:function(documentID,index,newData){
