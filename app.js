@@ -2,110 +2,58 @@ const quotes={
 	documentID:'1079866388960788480',
 	index:function(){
 		database.index(quotes.documentID,function(items){
-			document.getElementById('quotes').innerHTML='';
 			console.log("We have made it to database.index in app.js");
 
 			for(let i=0;i<items.users.length;i++){
 
 				let user=items.users[i];
 
-				let el=document.createElement('div');
+				let elm=document.createElement('div');
 
-				el.innerHTML=`<div class="card" style="max-width:400px";>
+				elm.innerHTML=`
+				<div class="card row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 style="max-width:400px";">
 				<div class="card-body">
-			<h5 class="card-title">${item.firstName} ${item.lastName}</h5>
-			  <p class="card-text">${item.emailAddress}</p>
-			<button a href="index.html?index=${item.userID}" type="button" class="btn btn-dark">View</a></button>
-		  </div>`;
+			<h5 class="card-title" style="color: #FFCD95; font-size:45px;">${user.firstName} ${user.lastName}</h5>
+			  <p class="card-text" style="color: #FFCD95; font-size:20px">${user.emailAddress}</p>
+			<button a href="userDetail.html" type="button" class="btn btn-dark" style="font-size:18px">View</a></button>
+			</div>`;
 
-				document.getElementById('quotes').append(el);
+				document.getElementById('userdetails').append(elm);
 			}
 		}
 		)
 	},
 
-	userdetails:function(index){
-		database.index(quotes.documentID,index,function(item){
-			let user = item;
+	medupdates:function(index){
+		database.medicationEdit(quotes.documentID,index,function(item){
 			document.getElementById('loading').style.display='none';
-			document.getElementById('user-email').innerHTML=`<div id="emailAddress" class="col">${users.emailAddress}</div>`;
-			document.getElementById('user-fn').innerHTML=`<div id="userfn" class="col">${users.firstName}</div>`;
-			document.getElementById('user-ln').innerHTML=`<div id="userln" class="col">${users.lastName}</div>`;
+			document.querySelector('form input[name=medicationName]').value=item.medicationName;
+			document.querySelector('form input[name=medType]').value=item.medType;
+			document.querySelector('form input[name=dosage]').value=item.dosage;
+			document.querySelector('form input[name=numberOfDailyDoses]').value=item.numberOfDailyDoses;
+			document.querySelector('form input[name=medNotes]').value=item.medNotes;
+			document.querySelector('form input[name=medicationID]').value=item.medicationID;
 
-			database.usersArray(quotes.documentID,function(item){
-				for(let i=0;i<item.length;i++){
-					if(item[i].userID==users.userID){
-						console.log(item[i]);
-						document.getElementById('user-page').innerHTML+=`<div class="card" style="max-width:400px";>
-						<div class="card-body">
-                    <h5 class="card-title">${item.firstName} ${item.lastName}</h5>
-                      <p class="card-text">${item.emailAddress}</p>
-                    <button a href="index.html?index=${item.userID}" type="button" class="btn btn-dark">View</a></button>
-                  </div>`;
-					}
+			document.querySelector('form').addEventListener('submit',function(e){
+				e.preventDefault();
+				let medicationName=document.querySelector('form input[name=medicationName]');
+				let medType=document.querySelector('form input[name=medType]');
+				let dosage=document.querySelector('form input[name=dosage]');
+				let numberOfDailyDoses=document.querySelector('form input[name=numberOfDailyDoses]');
+				let medNotes=document.querySelector('form input[name=medNotes]');
+				let medicationID=document.querySelector('form input[name=medicationID]');
+
+				let newMed={
+					medicationName:medicationName.value,
+					medType:medType.value,
+					dosage:dosage.value,
+					numberOfDailyDoses:numberOfDailyDoses.value,
+					medNotes:medNotes.value,
+					medicationID:medicationID.value,
 				}
-			}
-			)
-		}
-		)
-	},
-
-	for(let i=0;i<items.medications.length;i++){
-		let med=items.medications[i];
-		let elm=document.createElement('div');
-		elm.innerHTML=`<div>
-		<blockquote>
-			<em><a href="medicationEdit.html?index=${i}">${medications.medicationName} ${medications.medType}</a></em>
-		</blockquote>
-		<hr />
-		</div>`;
-		document.getElementById('medications').append(elm);
-	}
-},
-
-
-MedEdit:function(index){
-	database.medsedit(quotes.documentID,function(item){
-		let medsedit = item;
-		document.getElementById('loading').style.display='none';
-		document.getElementById('med-name').innerHTML=`<div id="medname" class="col">${medications.medicationName}</div>`;
-		document.getElementById('med-type').innerHTML=`<div id="medtype" class="col">${medications.medType}</div>`;
-		document.getElementById('dosage-amt').innerHTML=`<div id="doseamt" class="col">${medications.dosage}</div>`;
-		document.getElementById('daily-amt').innerHTML=`<div id="dailyamt" class="col">${medications.numberOfDailyDoses}</div>`;
-		document.getElementById('med-notes').innerHTML=`<div id="mednotes" class="col">${medications.medNotes}</div>`;
-
-			for(let i=0;i<item.length;i++){
-
-				if(item[i].medicationID==medications.medicationID){
-					console.log(item[i]);
-					document.getElementById('meds-page').innerHTML+=`<div class="form-group">
-					<label for="exampleFormControlInput1">Medication Name</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.medicationName}">
-					</div>
-					<div class="form-group">
-					<label for="exampleFormControlInput1">Medication Type</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.medType}">
-					</div>
-					<div class="form-group">
-					<label for="exampleFormControlInput1">Amount Per Day</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.dosage}">
-					</div>
-					<div class="form-group">
-					<label for="exampleFormControlInput1">Doses Per Day</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.numberOfDailyDoses}">
-					</div>
-					<div class="form-group">
-					<label for="exampleFormControlInput1">Medication Notes</label>
-					<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="${medications.medNotes}">
-				</div>
-					</div>
-					<button class="btn btn-dark" type="submit">Submit</button>
-					<button class="btn btn-light" type="cancel">Cancel</button>
-				</form>`;
-				}
-			}
-		}
-		)
+				database.MedUpdates(quotes.documentID,index,newMed);
+			});
+		});
 	},
 
 
