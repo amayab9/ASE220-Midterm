@@ -1,4 +1,3 @@
-
 // 
 //Function to get json
 async function fetchFunction(){
@@ -18,6 +17,23 @@ async function fetchFunction(){
         //Set the only element in created array to a constant
         const pet= pets[0];
         writeToDiv(med,pet);
+        let deleteButton = document.getElementById('btn-delete');
+			deleteButton.addEventListener('click', function() {
+				const findIndex = response.data.medications.findIndex((object) => {
+                    return object.medicationID === medicationID;
+                    
+                })
+                if (findIndex > -1) {
+                    response.data.medications.splice(findIndex, 1);
+                  }
+                  console.log(response.data.medications);
+                  api.PUT('1079866388960788480',response.data, function(response) {
+                    if(response.status === 200) {
+                        document.location.href = window.location.protocol + '//' + window.location.host + '/index.html';
+                    }
+                  }); 
+           });
+           
     }); 
 }
 // write information to html divs passing in the two const med and pet
@@ -34,11 +50,15 @@ function writeToDiv(med,pet){
             Medication Notes: ${med.medNotes}<br />
     </div>
     <div id="buttons" class="col-12">
-    <a href="petDetail.html?petID=${pet.petID}">Back to Pet</a> | <a id="btn-edit" href="">Edit Info</a> | <button type="button" id="btn-delete">Delete Info</button>
+    <a href="petDetail.html?petID=${pet.petID}">Back to Pet</a> | <a id="btn-edit" href="MedicationEdit.html?${med.medicationID}">Edit Info</a> | <button type="button" id="btn-delete">Delete Info</button>
     </div>`;
 };
-
-
-
-
+function medDelete(data, med){
+    api.GET(documentID,function(response){
+        data.splice(med.medicaitonID);
+        api.PUT(documentID,response.data,function(){
+            alert('This Medication has been deleted. Please go back to the home page');
+        });
+    });
+}
 document.addEventListener('DOMContentLoaded', async () => await fetchFunction(), false);
