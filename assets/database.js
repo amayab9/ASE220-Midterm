@@ -7,7 +7,7 @@ const database={
 	},
 	medicationEdit:function(documentID,index,newData){
 	api.GET(documentID,function(response){
-		response.data.medications[1]=newData;
+		response.data.medications[item]=newData;
 		api.PUT(documentID,response.data,function(){
 			alert('The medication has been updated');
 		});
@@ -15,7 +15,7 @@ const database={
 },
 medicationDetail:function(documentID,index,callback){
 	api.GET(documentID,function(response){
-		callback(response.data.medications[1]);
+		callback(response.data.medications[item]);
 	});
 },
 	detail:function(documentID,index,callback){
