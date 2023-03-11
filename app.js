@@ -25,8 +25,8 @@ const quotes={
 	},
 
 	medupdates:function(index){
-		database.medicationEdit(quotes.documentID,index,function(item){
-			document.getElementById('loading').style.display='none';
+		database.medicationDetail(quotes.documentID,index,function(item){
+			console.log(item);
 			document.querySelector('form input[name=medicationName]').value=item.medicationName;
 			document.querySelector('form input[name=medType]').value=item.medType;
 			document.querySelector('form input[name=dosage]').value=item.dosage;
@@ -51,7 +51,7 @@ const quotes={
 					medNotes:medNotes.value,
 					medicationID:medicationID.value,
 				}
-				database.MedUpdates(quotes.documentID,index,newMed);
+				database.medicationEdit(quotes.documentID,index,newMed);
 			});
 		});
 	},

@@ -5,6 +5,19 @@ const database={
 			callback(response.data);
 		});
 	},
+	medicationEdit:function(documentID,index,newData){
+	api.GET(documentID,function(response){
+		response.data.medications[1]=newData;
+		api.PUT(documentID,response.data,function(){
+			alert('The medication has been updated');
+		});
+	});
+},
+medicationDetail:function(documentID,index,callback){
+	api.GET(documentID,function(response){
+		callback(response.data.medications[1]);
+	});
+},
 	detail:function(documentID,index,callback){
 		api.GET(documentID,function(response){
 			callback(response.data[index]);
