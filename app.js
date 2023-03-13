@@ -40,7 +40,7 @@ const quotes={
 						</div>`;
 					document.getElementById('pet-stats').innerHTML=`<div class="row justify-content-start">
 							<div id="petSex" class="col-4">Sex: ${pet.petSex}</div>
-							<div id="petDoB" class="col-4">DoB: ${pet.petDoB}</div>
+							<div id="petDoB" class="col-4">Date of Birth: ${pet.petDoB}</div>
 							<div id="petWeight" class="col-4">Weight: ${pet.petWeight}</div>
 						</div>`;
 					document.getElementById('btn-edit').setAttribute('href',`petEdit.html?petID=${cPetID}`);
