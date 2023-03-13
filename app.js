@@ -143,15 +143,26 @@ const quotes={
 	},
 	petupdate:function(petID){
 		database.petDetail(quotes.documentID,petID,function(item){
-			// const cPetID = getAllUrlParams().petid;
+			const cPetID = getAllUrlParams().petid;
+			// 
 			document.getElementById('loading').style.display='none';
-			document.querySelector('form input[name=petName]').value=item.petName;
-			document.querySelector('form input[name=userID]').value=item.userID;
-			document.querySelector('form input[name=petTye]').value=item.petType;
-			document.querySelector('form input[name=petBreed]').value=item.petBreed;
-			document.querySelector('form input[name=petSex]').value=item.petSex;
-			document.querySelector('form input[name=petDoB]').value=item.petDoB;
-			document.querySelector('form input[name=petWeight]').value=item.petWeight;
+			for(let i=0;i<item.length;i++)
+			{
+				// if the item in the array matches the passed in PetID then write the information to the form.
+				if(item[i].petID==cPetID){
+					document.querySelector('form input[name=petName]').value=item[i].petName;
+					document.querySelector('form input[name=userID]').value=item[i].userID;
+					document.querySelector('form input[name=petTye]').value=item[i].petType;
+					document.querySelector('form input[name=petBreed]').value=item[i].petBreed;
+					document.querySelector('form input[name=petSex]').value=item[i].petSex;
+					document.querySelector('form input[name=petDoB]').value=item[i].petDoB;
+					document.querySelector('form input[name=petWeight]').value=item[i].petWeight;
+				}
+				else{
+					// do nothing
+				}
+			}
+			
 
 			// this makes the button work.
 			document.querySelector('form').addEventListener('submit',function(e){
