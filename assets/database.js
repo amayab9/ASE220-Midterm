@@ -24,7 +24,7 @@ const database={
 		});
 	},
 	// this is actually an alteration of database.index
-	medicationArray:function(documentID,callback){
+	medicationArray:function(documentID,petID,callback){
 		api.GET(documentID,function(response){
 			// this should return the /entire/ medicationLog array. Messy, unwieldy, but good enough for now.
 			// TODO: fix this to be better. pass in petID and return array of only medications taken by that pet.
