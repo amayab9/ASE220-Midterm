@@ -162,7 +162,6 @@ const quotes={
 					// do nothing
 				}
 			}
-			
 
 			// this makes the button work.
 			document.querySelector('form').addEventListener('submit',function(e){
