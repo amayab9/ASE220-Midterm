@@ -1,5 +1,7 @@
 const quotes={
-	documentID:'1079866388960788480',
+	// From the JSON Blob
+	// documentID:'1079866388960788480',
+	documentID:'data',
 	index:function(){
 		database.index(quotes.documentID,function(item){
 			for(let i=0;i<item.length;i++){
@@ -59,7 +61,7 @@ const quotes={
 								<div class="card-body">
 								<h5 class="card-title">${item[i].medicationName}</h5>
 								<h6 class="card-subtitle mb-2 text-muted">${item[i].medType}</h6>
-								<p class="card-text">Dose Amount: ${item[i].dosage}</p><p class="card-text">Timing: ${item[i].numberOfDailyDoses}</p>
+								<p class="card-text">Dose Amount: ${item[i].dosage}</p><p class="card-text">  Daily Doses: ${item[i].numberOfDailyDoses}</p>
 								<p class="card-text">Notes: ${item[i].medNotes}</p>
 								</div>
 							</div>
