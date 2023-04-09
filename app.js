@@ -50,7 +50,6 @@ const quotes={
 			// creates a card and APPENDS it to the innerHTML to create multiple cards.
 			// run a loop through medications, check that userID and petID in medication object matches current pet.
 			database.medicationArray(quotes.documentID,cPetID,function(item){
-				console.log(cPetID);
 				for(let i=0;i<item.length;i++){
 					// if PetID matches, add medication page
 					if(item[i].petID==cPetID){
