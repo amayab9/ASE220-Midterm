@@ -1,5 +1,5 @@
 const quotes={
-	// From the JSON Blob
+	// For the JSON Blob
 	// documentID:'1079866388960788480',
 	documentID:'data',
 	index:function(){

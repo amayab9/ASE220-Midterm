@@ -12,22 +12,19 @@ const api={
 		});
 	}, */
 	// Non-axios versions of GET & PUSH below this point.
-	GET:function(documentID,index,res){
+	GET:function(documentID,res){
 		// Rough GET method
-		let url_components=url.parse(req.url,true);
-		const splitURL=url_components.pathname.split('/');
 		let json_string;
-		let filename = splitURL[1];
 		// console.log(my_new_file);
 		// Read data from a file
-		console.log(filename);
-		console.log(fs.existsSync(`./data/${filename}.json`));
+		console.log(documentID);
+		console.log(fs.existsSync(`./data/${documentID}.json`));
 	
 		// checking that the file exists.
-		switch(fs.existsSync(`./data/${filename}.json`)){
+		switch(fs.existsSync(`./data/${documentID}.json`)){
 			case true: 
-				console.log(`Attempting read of file: ${filename}`);
-				console.log(fs.readFileSync(`./data/${filename}.json`,'utf8'));
+				console.log(`Attempting read of file: ${documentID}`);
+				console.log(fs.readFileSync(`./data/${documentID}.json`,'utf8'));
 				// header for dealing with tricky cross-plug-in stuff.
 				res.setHeader('Access-Control-Allow-Origin', '*');
 				res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
@@ -35,8 +32,12 @@ const api={
 				res.writeHead(200,{'Content-Type':'application/json'});
 				res.write(json_string);
 				break;
-			case false: 
-				console.log("File Not Found");
+			case false: // header for dealing with tricky cross-plug-in stuff.
+				res.setHeader('Access-Control-Allow-Origin', '*');
+				res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+				res.setHeader('Access-Control-Max-Age', 2592000); // 30 days
+				res.writeHead(404,{'Content-Type':'application/json'});
+				res.write("File not found.");
 			break;
 		}
 	},
