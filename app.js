@@ -171,7 +171,7 @@ const quotes={
 				let petWeight=document.querySelector('form input[name=petWeight]');
 				// petID purposely stays the same.
 				let newPet={
-					petID:item.petID,
+					petID:cPetID,
 					userID:userID.value,
 					petName:petName.value,
 					petType:petType.value,
@@ -180,7 +180,7 @@ const quotes={
 					petWeight:petWeight.value,
 					petDoB:petDoB.value,
 				}
-				database.petUpdate(quotes.documentID,index,newPet);
+				database.petUpdate(quotes.documentID,cPetID,newPet);
 			});
 		});
 	}

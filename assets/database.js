@@ -41,6 +41,8 @@ const database={
 	},
 	petUpdate:function(documentID,index,newData){
 		api.GET(documentID,function(response){
+			console.log("Index in the get");
+			// response.data.pets gets the array of pets back.
 			response.data.pets[index]=newData;
 			api.PUT(documentID,response.data,function(){
 				alert('The pet has been updated. Please go back to the home page');
