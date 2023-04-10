@@ -26,10 +26,9 @@ const quotes={
 		// The info from the JSONBlob at the index is passed in as item, should be 1 pet from the array.
 		database.petDetail(quotes.documentID,petID,function(item){
 			const cPetID = getAllUrlParams().petid;
-			for(let i=0;i<item.length;i++){{
+			for(let i=0;i<item.length;i++){
 				if(item[i].petID==cPetID){
 					let pet = item[i];
-					console.log(pet);
 					document.getElementById('loading').style.display='none';
 					// document.getElementById('pet-photo').innerHTML=`<div id="petPhoto" class="col">${pet.petPhoto}</div>`;
 					document.getElementById('pet-ident').innerHTML=`<div class="row justify-content-start">
@@ -47,34 +46,31 @@ const quotes={
 						</div>`;
 					document.getElementById('btn-edit').setAttribute('href',`petEdit.html?petID=${cPetID}`);
 				}
+			}
 				
-				// This should add all medications taken by the pet as cards. Pagination can be added later.
-				// creates a card and APPENDS it to the innerHTML to create multiple cards.
-				// run a loop through medications, check that userID and petID in medication object matches current pet.
-				// need to pull medicationLog from jsonBlob.
-				database.medicationArray(quotes.documentID,function(item){
-					for(let i=0;i<item.length;i++){
-						// if PetID matches, add medication page
-						if(item[i].petID==cPetID){
-							document.getElementById('medication-pages').innerHTML+=`<div "col-sm-6">
+			// This should add all medications taken by the pet as cards. Pagination can be added later.
+			// creates a card and APPENDS it to the innerHTML to create multiple cards.
+			// run a loop through medications, check that userID and petID in medication object matches current pet.
+			database.medicationArray(quotes.documentID,cPetID,function(item){
+				for(let i=0;i<item.length;i++){
+					// if PetID matches, add medication page
+					if(item[i].petID==cPetID){
+						document.getElementById('medication-pages').innerHTML+=`<div "col-sm-6">
 							<div class="card" style="width: 18rem;">
-								<div class="card-body">
-								<h5 class="card-title">${item[i].medicationName}</h5>
-								<h6 class="card-subtitle mb-2 text-muted">${item[i].medType}</h6>
-								<p class="card-text">Dose Amount: ${item[i].dosage}</p><p class="card-text">  Daily Doses: ${item[i].numberOfDailyDoses}</p>
-								<p class="card-text">Notes: ${item[i].medNotes}</p>
+							<div class="card-body">
+							<h5 class="card-title">${item[i].medicationName}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">${item[i].medType}</h6>
+							<p class="card-text">Dose Amount: ${item[i].dosage}</p><p class="card-text">Timing: ${item[i].numberOfDailyDoses}</p>
+							<p class="card-text">Notes: ${item[i].medNotes}</p>
 								</div>
 							</div>
 						</div>`
-						}
-						else{
-							// else Do nothing
-						}
 					}
-				});
-			
-			}};
-
+					else{
+						break;
+					}
+				}
+			});	
 
 			let deleteButton=document.getElementById('btn-delete');
 			deleteButton.addEventListener('click',function(){
@@ -177,7 +173,7 @@ const quotes={
 				let petWeight=document.querySelector('form input[name=petWeight]');
 				// petID purposely stays the same.
 				let newPet={
-					petID:item.petID,
+					petID:cPetID,
 					userID:userID.value,
 					petName:petName.value,
 					petType:petType.value,
@@ -186,7 +182,7 @@ const quotes={
 					petWeight:petWeight.value,
 					petDoB:petDoB.value,
 				}
-				database.petUpdate(quotes.documentID,index,newPet);
+				database.petUpdate(quotes.documentID,cPetID,newPet);
 			});
 		});
 	}

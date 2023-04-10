@@ -24,10 +24,10 @@ const database={
 		});
 	},
 	// this is actually an alteration of database.index
-	medicationArray:function(documentID,callback){
+	medicationArray:function(documentID,petID,callback){
 		api.GET(documentID,function(response){
 			// this should return the /entire/ medicationLog array. Messy, unwieldy, but good enough for now.
-			// TODO: fix this to be better. pass in petID and return array of only medications taken by that pet.
+			// TODO: fix this to be better. Maybe pass in petID and return array of only medications taken by that pet.
 			callback(response.data.medications);
 		});
 	},
@@ -41,6 +41,8 @@ const database={
 	},
 	petUpdate:function(documentID,index,newData){
 		api.GET(documentID,function(response){
+			console.log("Index in the get");
+			// response.data.pets gets the array of pets back.
 			response.data.pets[index]=newData;
 			api.PUT(documentID,response.data,function(){
 				alert('The pet has been updated. Please go back to the home page');
