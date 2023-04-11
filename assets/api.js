@@ -1,6 +1,3 @@
-const fs=require('fs');
-const url=require('url');
-
 const api={
 	// endpoint:'https://jsonblob.com/api/jsonBlob/',
 	
