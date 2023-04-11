@@ -11,7 +11,7 @@ const api={
 			console.log(error);
 		});
 	}, */
-	
+
 	// Non-axios versions of GET & PUSH below this point.
 	GET:function(documentID,res){
 		// Rough GET method

@@ -65,6 +65,15 @@
 		"petSex": "Female",
 		"petBreed": "French Lop",
 		"petWeight": "8"
+	  },
+	  {
+		"petID": "5",
+		"userID": "34",
+		"petName": "Biscuit",
+		"petType": "Cat",
+		"petSex": "Male",
+		"petBreed": "American Short Hair",
+		"petWeight": "12"
 	  }
 	],
 	"medications": [
@@ -78,7 +87,7 @@
 		"medNotes": "Take with food"
 	  },
 	  {
-		  "medicationID": "2",
+		"medicationID": "2",
 		"petID": "1",
 		"medicationName": "med2",
 		"medType": "Probiotic",
