@@ -17,7 +17,8 @@ const api={
 		// Read data from a file
 		console.log(documentID);
 		console.log(fs.existsSync(`./data/${documentID}.json`));
-	
+		json_string = fs.existsSync(`./data/${documentID}.json`);
+		
 		// checking that the file exists.
 		switch(fs.existsSync(`./data/${documentID}.json`)){
 			case true: 
