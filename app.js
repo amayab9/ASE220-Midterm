@@ -47,7 +47,6 @@ const quotes={
 					document.getElementById('btn-edit').setAttribute('href',`petEdit.html?petID=${cPetID}`);
 				}
 			}
-				
 			// This should add all medications taken by the pet as cards. Pagination can be added later.
 			// creates a card and APPENDS it to the innerHTML to create multiple cards.
 			// run a loop through medications, check that userID and petID in medication object matches current pet.
